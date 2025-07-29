@@ -30,7 +30,9 @@ public enum ShopLorePlaceholdersEnum {
     SHOP_LOCATION("{SHOP_LOC}"),
     SHOP_WORLD("{SHOP_WORLD}"),
     NEAREST_WARP("{NEAREST_WARP}"),
-    SHOP_VISITS("{SHOP_VISITS}");
+    SHOP_VISITS("{SHOP_VISITS}"),
+    SHOP_OWNER_TOWN("{SHOP_OWNER_TOWN}"); // Nuevo placeholder para Towns and Nations
+    
     private final String placeholder;
 
     ShopLorePlaceholdersEnum(String placeholder) {

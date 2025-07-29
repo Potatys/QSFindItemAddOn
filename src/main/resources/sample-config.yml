@@ -91,8 +91,10 @@ nearest-warp-mode: 1
 # {SHOP_WORLD}          -> Name of the world the shop is in
 # {NEAREST_WARP}        -> Warp/Region/Residence nearest to shop
 # {SHOP_VISITS}         -> Total Player visits to shop
+# {SHOP_OWNER_TOWN}     -> Town name of shop owner (requires Towns and Nations + PlaceholderAPI)
 # -> To show nearest warp/region, configure 'nearest-warp-mode' first.
-#    If plugin selected is not installed/enabled, it ignores the line containing {NEAREST_WARP}
+# -> To show town name, ensure Towns and Nations plugin and PlaceholderAPI are installed
+#    If plugin selected is not installed/enabled, it ignores the line containing {NEAREST_WARP} or {SHOP_OWNER_TOWN}
 # -> Please don't put more than one placeholder in a single lore line
 # -> If you don't want to show the below lore for any item,
 #    set the below field as shop-gui-item-lore: []
@@ -101,6 +103,7 @@ shop-gui-item-lore:
   - "&fPrice: &a${ITEM_PRICE} per {ITEM_STACK_SIZE} item(s)"
   - "&fStock/Space: &7{SHOP_STOCK}"
   - "&fOwner: &7{SHOP_OWNER}"
+  - "&fTown: &7{SHOP_OWNER_TOWN}"
   - "&fLocation: &7{SHOP_LOC}"
   - "&fWorld: &7{SHOP_WORLD}"
   - "&fWarp: &7{NEAREST_WARP}"

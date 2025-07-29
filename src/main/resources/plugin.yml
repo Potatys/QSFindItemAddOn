@@ -12,6 +12,7 @@ softdepend:
   - Essentials
   - Residence
   - BentoBox
+  - PlaceholderAPI
 
 permissions:
   finditem.use:

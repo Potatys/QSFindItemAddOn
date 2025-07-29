@@ -64,6 +64,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
+
 /**
  * Handler class for FoundShops GUI
  * 
@@ -610,7 +613,6 @@ public class FoundShopsMenu extends PaginatedMenu {
             int stock = shop.getRemainingStockOrSpace();
             String stockText;
             if (stock == -2) {
-                // if -2 (cache doesn't have value) -> try to fetch from MAIN thread
                 int stockOrSpace = processUnknownStockSpace(shop);
                 stockText = (stockOrSpace == -2) ? SHOP_STOCK_UNKNOWN
                         : (stockOrSpace == -1 ? SHOP_STOCK_UNLIMITED : String.valueOf(stockOrSpace));
@@ -625,7 +627,6 @@ public class FoundShopsMenu extends PaginatedMenu {
 
         if (text.contains(ShopLorePlaceholdersEnum.SHOP_OWNER.value())) {
             OfflinePlayer shopOwner = Bukkit.getOfflinePlayer(shop.getShopOwner());
-            // set a generic name for shops with no owner name ('Admin')
             String ownerName = shopOwner.getName() != null ? shopOwner.getName() : "Admin";
             text = text.replace(ShopLorePlaceholdersEnum.SHOP_OWNER.value(), ownerName);
         }
@@ -639,9 +640,23 @@ public class FoundShopsMenu extends PaginatedMenu {
         text = text.replace(ShopLorePlaceholdersEnum.SHOP_WORLD.value(),
                 Objects.requireNonNull(shop.getShopLocation().getWorld()).getName());
 
-        // Added in v2.0
         text = text.replace(ShopLorePlaceholdersEnum.SHOP_VISITS.value(),
                 String.valueOf(ShopSearchActivityStorageUtil.getPlayerVisitCount(shop.getShopLocation())));
+
+        // Nuevo placeholder para Towns and Nations
+        if (text.contains(ShopLorePlaceholdersEnum.SHOP_OWNER_TOWN.value())) {
+            String townName = "No town";
+            if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+                OfflinePlayer shopOwner = Bukkit.getOfflinePlayer(shop.getShopOwner());
+                if (shopOwner.getName() != null) {
+                    String papiResult = PlaceholderAPI.setPlaceholders(shopOwner, "%tan_player_town_name%");
+                    if (papiResult != null && !papiResult.equals("%tan_player_town_name%") && !papiResult.trim().isEmpty()) {
+                        townName = papiResult;
+                    }
+                }
+            }
+            text = text.replace(ShopLorePlaceholdersEnum.SHOP_OWNER_TOWN.value(), townName);
+        }
 
         return text;
     }
